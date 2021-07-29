@@ -49,6 +49,7 @@ namespace WebAPIDotNET5
                 options.UseSqlite("Data Source=myapi.db"));
 
             services.AddScoped<DiretorService>();
+            services.AddScoped<FilmeService>();
 
         }
 
@@ -69,8 +70,6 @@ namespace WebAPIDotNET5
                 //});
 
             }
-
-
 
             app.UseHttpsRedirection();
 

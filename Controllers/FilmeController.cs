@@ -4,19 +4,20 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPIDotNET5.DTOs;
+using WebAPIDotNET5.Services;
 
 namespace WebAPIDotNET5.Controllers
 {
 
     [ApiController] // Diz que a classe Controller é uma API  
-    [Route("api/[controller]")] // Rota do recurso
+    [Route("[controller]")] // Rota do recurso
     public class FilmeController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly FilmeService _filmeService;
 
-        public FilmeController(ApplicationDbContext context)
+        public FilmeController(FilmeService filmeService)
         {
-            _context = context;
+            _filmeService = filmeService;
         }
 
         /// <summary>
@@ -25,11 +26,10 @@ namespace WebAPIDotNET5.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST /filmes
-        ///     {
-        ///        
+        ///     POST /filme
+        ///     { 
         ///        "titulo": "Jurassic Park", 
-        ///        "diretorId": "1"
+        ///        "diretorId": 1
         ///     }
         /// </remarks>
         /// <param name="filmeInputPostDto">Titulo do filme e Id do diretor</param>
@@ -40,18 +40,7 @@ namespace WebAPIDotNET5.Controllers
         [HttpPost]
         public async Task<ActionResult<FilmeOutputPostDTO>> Post([FromBody] FilmeInputPostDTO filmeInputPostDto)
         {
-
-
-            var diretorDoFilme = await _context.Diretores.FirstOrDefaultAsync(diretor => diretor.Id == filmeInputPostDto.DiretorId);
-            var filme = new Filme(filmeInputPostDto.Titulo, diretorDoFilme.Id);
-            await _context.Filmes.AddAsync(filme);
-            await _context.SaveChangesAsync();
-            var filmeOutputPostDto = new FilmeOutputPostDTO(filme.Id, filme.Titulo);
-
-            return Ok(filmeOutputPostDto);
-
-
-
+            return Ok(await _filmeService.Cria(filmeInputPostDto));
         }
 
         /// <summary>
@@ -63,20 +52,7 @@ namespace WebAPIDotNET5.Controllers
         [HttpGet]
         public async Task<ActionResult<List<FilmeOutputGetAllDTO>>> Get()
         {
-
-            var filmes = await _context.Filmes.ToListAsync();
-            if (filmes == null)
-            {
-                throw new Exception("Filmes não encontrados!");
-            }
-            var filmeOutputGetAllDto = new List<FilmeOutputGetAllDTO>();
-            foreach (Filme filme in filmes)
-            {
-                filmeOutputGetAllDto.Add(new FilmeOutputGetAllDTO(filme.Id, filme.Titulo));
-            }
-            return filmeOutputGetAllDto;
-
-
+            return await _filmeService.BuscaTodos();
         }
 
         /// <summary>
@@ -89,14 +65,7 @@ namespace WebAPIDotNET5.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<FilmeOutputGetByIdDTO>> Get(long id)
         {
-
-            var filme = await _context.Filmes.Include(filme => filme.Diretor).FirstOrDefaultAsync(filme => filme.Id == id);
-            if (filme == null)
-            {
-                throw new Exception("Filme não encontrado!");
-            }
-            var filmeOutputGetByIdDto = new FilmeOutputGetByIdDTO(filme.Id, filme.Titulo, filme.DiretorId, filme.Diretor.Nome);
-            return Ok(filmeOutputGetByIdDto);
+            return Ok(await _filmeService.BuscaPorId(id));
         }
 
         /// <summary>
@@ -105,11 +74,10 @@ namespace WebAPIDotNET5.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST /filmes
+        ///     POST /filme
         ///     {
-        ///        
         ///        "titulo": "Novo Nome", 
-        ///        "diretorId": "2"
+        ///        "diretorId": 1
         ///     }
         /// </remarks>
         /// <param name="id">Id do Filme</param>
@@ -121,28 +89,12 @@ namespace WebAPIDotNET5.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<FilmeOutputPutDTO>> Put(long id, [FromBody] FilmeInputPutDTO filmeInputPutDto)
         {
-            var filme = new Filme(filmeInputPutDto.Titulo, filmeInputPutDto.DiretorId);
-            filme.Id = id;
-            _context.Filmes.Update(filme);
-            await _context.SaveChangesAsync();
-            var filmeOutputPutDto = new FilmeOutputPutDTO(filme.Id, filme.Titulo);
-
-            return Ok(filmeOutputPutDto);
+            return Ok(await _filmeService.Atualiza(id, filmeInputPutDto));
         }
 
         /// <summary>
         /// Deleta um filme
         /// </summary>
-        /// <remarks>
-        /// Sample request:
-        ///
-        ///     POST /diretores
-        ///     {
-        ///        
-        ///        "nome": "Steven Spielberg", 
-        ///        "email": "steven.spielberg@gmail.com"
-        ///     }
-        /// </remarks>
         /// <param name="id">Id do diretor</param>
         /// <response code="200">Sucesso ao deletar um filme.</response>
         /// <response code="201">Retorna um filme recém deletado.</response>
@@ -151,16 +103,7 @@ namespace WebAPIDotNET5.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Filme>> Delete(long id)
         {
-            var filme = await _context.Filmes.FirstOrDefaultAsync(filme => filme.Id == id);
-
-            if (filme == null)
-            {
-                throw new Exception("Filme não encontrado!");
-            }
-            _context.Filmes.Remove(filme);
-            await _context.SaveChangesAsync();
-            return Ok(filme);
-
+            return Ok(await _filmeService.Deleta(id));
         }
     }
 }

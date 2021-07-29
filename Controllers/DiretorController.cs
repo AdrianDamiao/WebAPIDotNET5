@@ -22,14 +22,13 @@ namespace WebAPIDotNET5.Controllers
             _diretorService = diretorService;
         }
 
-
         /// <summary>
         /// Cria um diretor
         /// </summary>
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST /diretores
+        ///     POST /diretor
         ///     {
         ///        "nome": "Steven Spielberg", 
         ///        "email": "steven.spielberg@gmail.com"
@@ -77,7 +76,7 @@ namespace WebAPIDotNET5.Controllers
         /// <remarks>
         /// Sample request:
         ///
-        ///     POST /diretores
+        ///     POST /diretor
         ///     {
         ///        "nome": "Novo Nome", 
         ///        "email": "NovoEmail@gmail.com"
