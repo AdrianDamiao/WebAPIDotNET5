@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebAPIDotNET5.DTOs;
+using WebAPIDotNET5.Services;
 
 namespace WebAPIDotNET5.Controllers
 {
@@ -12,10 +13,13 @@ namespace WebAPIDotNET5.Controllers
     [Route("[controller]")] // Rota do recurso
     public class DiretorController : ControllerBase
     {
-        private readonly ApplicationDbContext _context; //Contexto intermediario para comunicação com o banco
-        public DiretorController(ApplicationDbContext context) // Injeção de dependência -> pra construir um controller é necessario uma classe de contexto
+        private readonly ApplicationDbContext _context;
+        private readonly DiretorService _diretorService; //Contexto intermediario para comunicação com o banco
+        public DiretorController(ApplicationDbContext context,
+                                 DiretorService diretorService) // Injeção de dependência -> pra construir um controller é necessario uma classe de contexto
         {
             _context = context;
+            _diretorService = diretorService;
         }
 
 
@@ -27,7 +31,6 @@ namespace WebAPIDotNET5.Controllers
         ///
         ///     POST /diretores
         ///     {
-        ///        
         ///        "nome": "Steven Spielberg", 
         ///        "email": "steven.spielberg@gmail.com"
         ///     }
@@ -40,17 +43,7 @@ namespace WebAPIDotNET5.Controllers
         [HttpPost] //POST -> api/diretores
         public async Task<ActionResult<DiretorOutputPostDTO>> Post([FromBody] DiretorInputPostDTO diretorInputPostDto) // [FromBody] - Vem do corpo da requisição  
         {
-
-
-            var diretor = new Diretor(diretorInputPostDto.Nome, diretorInputPostDto.Email);
-            await _context.Diretores.AddAsync(diretor);
-            await _context.SaveChangesAsync();
-            var diretorOutputPostDto = new DiretorOutputPostDTO(diretor.Id, diretor.Nome, diretor.Email);
-
-            return Ok(diretorOutputPostDto);
-
-
-
+            return Ok(await _diretorService.Cria(diretorInputPostDto));
         }
 
         /// <summary>
@@ -62,19 +55,7 @@ namespace WebAPIDotNET5.Controllers
         [HttpGet]
         public async Task<ActionResult<List<DiretorOutputGetAllDTO>>> Get() //Toda vez que for async tem que ter uma Task
         {
-
-            var diretores = await _context.Diretores.ToListAsync();
-            if (diretores == null)
-            {
-                throw new Exception("Diretores não encontrados!");
-            }
-            var diretorOutputGetAllDto = new List<DiretorOutputGetAllDTO>();
-            foreach (Diretor diretor in diretores)
-            {
-                diretorOutputGetAllDto.Add(new DiretorOutputGetAllDTO(diretor.Id, diretor.Nome, diretor.Email));
-            }
-            return diretorOutputGetAllDto;
-
+            return await _diretorService.BuscaTodos();
         }
 
         /// <summary>
@@ -87,14 +68,7 @@ namespace WebAPIDotNET5.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<DiretorOutputGetByIdDTO>> Get(long id)
         {
-
-            var diretor = await _context.Diretores.FirstOrDefaultAsync(diretor => diretor.Id == id);
-            if (diretor == null)
-            {
-                throw new Exception("Diretor não encontrado!");
-            }
-            var diretorOutputGetByIdDto = new DiretorOutputGetByIdDTO(diretor.Id, diretor.Nome, diretor.Email);
-            return Ok(diretorOutputGetByIdDto);
+            return Ok(await _diretorService.BuscaPorId(id));
         }
 
         /// <summary>
@@ -105,7 +79,6 @@ namespace WebAPIDotNET5.Controllers
         ///
         ///     POST /diretores
         ///     {
-        ///        
         ///        "nome": "Novo Nome", 
         ///        "email": "NovoEmail@gmail.com"
         ///     }
@@ -117,16 +90,9 @@ namespace WebAPIDotNET5.Controllers
         /// <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
         /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpPut("{id}")]
-        public async Task<ActionResult<DiretorInputPutDTO>> Put(long id, [FromBody] DiretorInputPutDTO diretorInputPutDto)
+        public async Task<ActionResult<DiretorOutputPutDTO>> Put(long id, [FromBody] DiretorInputPutDTO diretorInputPutDto)
         {
-
-            var diretor = new Diretor(diretorInputPutDto.Nome, diretorInputPutDto.Email);
-            diretor.Id = id;
-            _context.Diretores.Update(diretor);
-            await _context.SaveChangesAsync();
-            var diretorOutputDto = new DiretorOutputPutDTO(diretor.Id, diretor.Nome, diretor.Email);
-
-            return Ok(diretorOutputDto);
+            return Ok(await _diretorService.Atualiza(id, diretorInputPutDto));
         }
 
         /// <summary>
@@ -140,17 +106,7 @@ namespace WebAPIDotNET5.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Diretor>> Delete(long id)
         {
-            var diretor = await _context.Diretores.FirstOrDefaultAsync(diretor => diretor.Id == id);
-
-            if (diretor == null)
-            {
-                throw new Exception("Diretor não encontrado!");
-            }
-
-            _context.Remove(diretor);
-            await _context.SaveChangesAsync();
-
-            return Ok(diretor);
+            return Ok(await _diretorService.Deleta(id));
         }
     }
 }
