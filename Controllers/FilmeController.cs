@@ -35,20 +35,12 @@ namespace WebAPIDotNET5.Controllers
         /// <param name="filmeInputPostDto">Titulo do filme e Id do diretor</param>
         /// <response code="200">Sucesso ao criar um filme.</response>
         /// <response code="201">Retorna um filme recém criado.</response>
-        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
         /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpPost]
         public async Task<ActionResult<FilmeOutputPostDTO>> Post([FromBody] FilmeInputPostDTO filmeInputPostDto)
         {
 
-            if (filmeInputPostDto.Titulo == "") //TEMPORÁRIO
-            {
-                throw new Exception("Titulo do filme é obrigatório.");
-            }
-            else if (filmeInputPostDto.DiretorId == 0)
-            {
-                return NotFound("Id do filme não pode ser 0.");
-            }
 
             var diretorDoFilme = await _context.Diretores.FirstOrDefaultAsync(diretor => diretor.Id == filmeInputPostDto.DiretorId);
             var filme = new Filme(filmeInputPostDto.Titulo, diretorDoFilme.Id);
@@ -66,7 +58,7 @@ namespace WebAPIDotNET5.Controllers
         /// Busca todos os filmes
         /// </summary>
         /// <response code="200">Sucesso ao buscar todos os filmes.</response>
-        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
         /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpGet]
         public async Task<ActionResult<List<FilmeOutputGetAllDTO>>> Get()
@@ -92,16 +84,11 @@ namespace WebAPIDotNET5.Controllers
         /// </summary>
         /// <param name="id">Id do filme</param>
         /// <response code="200">Sucesso ao buscar um filme.</response>
-        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
         /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<FilmeOutputGetByIdDTO>> Get(long id)
         {
-
-            if (id == 0)
-            {
-                throw new Exception("Id do filme não pode ser 0.");
-            }
 
             var filme = await _context.Filmes.Include(filme => filme.Diretor).FirstOrDefaultAsync(filme => filme.Id == id);
             if (filme == null)
@@ -129,20 +116,11 @@ namespace WebAPIDotNET5.Controllers
         /// <param name="filmeInputPutDto">Titulo do filme e Id do diretor</param>
         /// <response code="200">Sucesso ao atualizar um filme.</response>
         /// <response code="201">Retorna um filme recém atualizado.</response>
-        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
         /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpPut("{id}")]
         public async Task<ActionResult<FilmeOutputPutDTO>> Put(long id, [FromBody] FilmeInputPutDTO filmeInputPutDto)
         {
-            if (id == 0)
-            {
-                throw new Exception("Id do filme não pode ser 0.");
-            }
-            if (filmeInputPutDto.Titulo == "")
-            {
-                throw new Exception("Título do filme é obrigatório.");
-            }
-
             var filme = new Filme(filmeInputPutDto.Titulo, filmeInputPutDto.DiretorId);
             filme.Id = id;
             _context.Filmes.Update(filme);
@@ -168,15 +146,11 @@ namespace WebAPIDotNET5.Controllers
         /// <param name="id">Id do diretor</param>
         /// <response code="200">Sucesso ao deletar um filme.</response>
         /// <response code="201">Retorna um filme recém deletado.</response>
-        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
         /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Filme>> Delete(long id)
         {
-            if (id == 0)
-            {
-                throw new Exception("Id do filme não pode ser 0.");
-            }
             var filme = await _context.Filmes.FirstOrDefaultAsync(filme => filme.Id == id);
 
             if (filme == null)

@@ -35,21 +35,12 @@ namespace WebAPIDotNET5.Controllers
         /// <param name="diretorInputPostDto">Nome e email do diretor</param>
         /// <response code="200">Sucesso ao criar um diretor.</response>
         /// <response code="201">Retorna um diretor recém criado.</response>
-        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
         /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpPost] //POST -> api/diretores
         public async Task<ActionResult<DiretorOutputPostDTO>> Post([FromBody] DiretorInputPostDTO diretorInputPostDto) // [FromBody] - Vem do corpo da requisição  
         {
 
-
-            if (diretorInputPostDto.Nome == "") //TEMPORÁRIO
-            {
-                throw new Exception("Nome do diretor é obrigatório.");
-            }
-            else if (diretorInputPostDto.Email == "")
-            {
-                throw new Exception("Email do diretor é obrigatório.");
-            }
 
             var diretor = new Diretor(diretorInputPostDto.Nome, diretorInputPostDto.Email);
             await _context.Diretores.AddAsync(diretor);
@@ -66,7 +57,7 @@ namespace WebAPIDotNET5.Controllers
         /// Busca todos os diretores
         /// </summary>
         /// <response code="200">Sucesso ao buscar todos os diretores.</response>
-        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
         /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpGet]
         public async Task<ActionResult<List<DiretorOutputGetAllDTO>>> Get() //Toda vez que for async tem que ter uma Task
@@ -91,16 +82,11 @@ namespace WebAPIDotNET5.Controllers
         /// </summary>
         /// <param name="id">Id do diretor</param>
         /// <response code="200">Sucesso ao buscar um diretor.</response>
-        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
         /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<DiretorOutputGetByIdDTO>> Get(long id)
         {
-
-            if (id == 0) //TEMPORÁRIO
-            {
-                throw new Exception("Id do diretor não pode ser 0.");
-            }
 
             var diretor = await _context.Diretores.FirstOrDefaultAsync(diretor => diretor.Id == id);
             if (diretor == null)
@@ -128,24 +114,11 @@ namespace WebAPIDotNET5.Controllers
         /// <param name="diretorInputPutDto">Nome e email do diretor</param> 
         /// <response code="200">Sucesso ao atualizar um diretor.</response>
         /// <response code="201">Retorna um diretor recém atualizado.</response>
-        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
         /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpPut("{id}")]
         public async Task<ActionResult<DiretorInputPutDTO>> Put(long id, [FromBody] DiretorInputPutDTO diretorInputPutDto)
         {
-
-            if (id == 0) //TEMPORÁRIO
-            {
-                throw new Exception("Id do diretor não pode ser 0.");
-            }
-            if (diretorInputPutDto.Nome == "")
-            {
-                throw new Exception("Nome do diretor é obrigatório.");
-            }
-            else if (diretorInputPutDto.Email == "")
-            {
-                throw new Exception("Email do diretor é obrigatório.");
-            }
 
             var diretor = new Diretor(diretorInputPutDto.Nome, diretorInputPutDto.Email);
             diretor.Id = id;
@@ -162,17 +135,13 @@ namespace WebAPIDotNET5.Controllers
         /// <param name="id">Id do diretor</param>
         /// <response code="200">Sucesso ao deletar um diretor.</response>
         /// <response code="201">Retorna um diretor recém deletado.</response>
-        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
         /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Diretor>> Delete(long id)
         {
             var diretor = await _context.Diretores.FirstOrDefaultAsync(diretor => diretor.Id == id);
 
-            if (id == 0) //TEMPORÁRIO
-            {
-                throw new Exception("Id do diretor não pode ser 0.");
-            }
             if (diretor == null)
             {
                 throw new Exception("Diretor não encontrado!");

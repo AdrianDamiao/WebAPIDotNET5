@@ -348,8 +348,5 @@ MigrationBackup/
 
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
-appsettings.json
-appsettings.Development.json
-.vscode/tasks.json
-.vscode/launch.json
+*.db
 myapi.db
