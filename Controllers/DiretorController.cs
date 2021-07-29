@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -20,13 +21,14 @@ namespace WebAPIDotNET5.Controllers
         [HttpPost] //POST -> api/diretores
         public async Task<ActionResult<DiretorOutputPostDTO>> Post([FromBody] DiretorInputPostDTO diretorInputPostDto) // [FromBody] - Vem do corpo da requisição  
         {
+
             if (diretorInputPostDto.Nome == "") //TEMPORÁRIO
             {
-                return NotFound("O nome do diretor é obrigatório.");
+                throw new Exception("Nome do diretor é obrigatório.");
             }
             else if (diretorInputPostDto.Email == "")
             {
-                return NotFound("O email do diretor é obrigatório.");
+                throw new Exception("Email do diretor é obrigatório.");
             }
 
             var diretor = new Diretor(diretorInputPostDto.Nome, diretorInputPostDto.Email);
@@ -35,40 +37,62 @@ namespace WebAPIDotNET5.Controllers
             var diretorOutputPostDto = new DiretorOutputPostDTO(diretor.Id, diretor.Nome, diretor.Email);
 
             return Ok(diretorOutputPostDto);
+
+
+
         }
 
         [HttpGet]
-        public async Task<List<Diretor>> Get() //Toda vez que for async tem que ter uma Task
+        public async Task<ActionResult<List<DiretorOutputGetAllDTO>>> Get() //Toda vez que for async tem que ter uma Task
         {
-            return await _context.Diretores.ToListAsync();
+
+            var diretores = await _context.Diretores.ToListAsync();
+            if (diretores == null)
+            {
+                throw new Exception("Diretores não encontrados!");
+            }
+            var diretorOutputGetAllDto = new List<DiretorOutputGetAllDTO>();
+            foreach (Diretor diretor in diretores)
+            {
+                diretorOutputGetAllDto.Add(new DiretorOutputGetAllDTO(diretor.Id, diretor.Nome, diretor.Email));
+            }
+            return diretorOutputGetAllDto;
+
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Diretor>> Get(long id)
+        public async Task<ActionResult<DiretorOutputGetByIdDTO>> Get(long id)
         {
+
             if (id == 0) //TEMPORÁRIO
             {
-                return NotFound("Id do diretor não pode ser 0.");
+                throw new Exception("Id do diretor não pode ser 0.");
             }
-            var diretor = await _context.Diretores.FirstOrDefaultAsync(diretor => diretor.Id == id);
 
-            return Ok(diretor);
+            var diretor = await _context.Diretores.FirstOrDefaultAsync(diretor => diretor.Id == id);
+            if (diretor == null)
+            {
+                throw new Exception("Diretor não encontrado!");
+            }
+            var diretorOutputGetByIdDto = new DiretorOutputGetByIdDTO(diretor.Id, diretor.Nome, diretor.Email);
+            return Ok(diretorOutputGetByIdDto);
         }
 
         [HttpPut("{id}")]
         public async Task<ActionResult<DiretorInputPutDTO>> Put(long id, [FromBody] DiretorInputPutDTO diretorInputPutDto)
         {
+
             if (id == 0) //TEMPORÁRIO
             {
-                return NotFound("Id do diretor não pode ser 0.");
+                throw new Exception("Id do diretor não pode ser 0.");
             }
             if (diretorInputPutDto.Nome == "")
             {
-                return NotFound("O nome do diretor é obrigatório.");
+                throw new Exception("Nome do diretor é obrigatório.");
             }
             else if (diretorInputPutDto.Email == "")
             {
-                return NotFound("O email do diretor é obrigatório.");
+                throw new Exception("Email do diretor é obrigatório.");
             }
 
             var diretor = new Diretor(diretorInputPutDto.Nome, diretorInputPutDto.Email);
@@ -85,14 +109,13 @@ namespace WebAPIDotNET5.Controllers
         {
             var diretor = await _context.Diretores.FirstOrDefaultAsync(diretor => diretor.Id == id);
 
-
             if (id == 0) //TEMPORÁRIO
             {
-                return NotFound("Id do diretor não pode ser 0.");
+                throw new Exception("Id do diretor não pode ser 0.");
             }
             if (diretor == null)
             {
-                return NotFound("Diretor não existe.");
+                throw new Exception("Diretor não encontrado!");
             }
 
             _context.Remove(diretor);
@@ -100,8 +123,5 @@ namespace WebAPIDotNET5.Controllers
 
             return Ok(diretor);
         }
-
-
-
     }
 }

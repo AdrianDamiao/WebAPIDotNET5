@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebAPIDotNET5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210729011701_InitialCreate")]
+    [Migration("20210729013248_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
