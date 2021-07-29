@@ -12,7 +12,7 @@ namespace WebAPIDotNET5.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.8");
+                .HasAnnotation("ProductVersion", "5.0.6");
 
             modelBuilder.Entity("Diretor", b =>
                 {

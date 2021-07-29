@@ -12,6 +12,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.IO;
 
 namespace WebAPIDotNET5
 {
@@ -31,10 +33,17 @@ namespace WebAPIDotNET5
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIDotNet", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIDotNET5", Version = "v1" });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite("Data Source=myapi.db"));
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,7 +55,7 @@ namespace WebAPIDotNET5
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIDotNet v1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIDotNET5 v1");
                     c.RoutePrefix = string.Empty;
                 });
                 // app.Run(async context => { //Abrir o swagger ao iniciar a API

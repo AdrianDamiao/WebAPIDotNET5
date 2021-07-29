@@ -18,9 +18,29 @@ namespace WebAPIDotNET5.Controllers
             _context = context;
         }
 
+
+        /// <summary>
+        /// Cria um diretor
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /diretores
+        ///     {
+        ///        
+        ///        "nome": "Steven Spielberg", 
+        ///        "email": "steven.spielberg@gmail.com"
+        ///     }
+        /// </remarks>
+        /// <param name="diretorInputPostDto">Nome e email do diretor</param>
+        /// <response code="200">Sucesso ao criar um diretor.</response>
+        /// <response code="201">Retorna um diretor recém criado.</response>
+        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpPost] //POST -> api/diretores
         public async Task<ActionResult<DiretorOutputPostDTO>> Post([FromBody] DiretorInputPostDTO diretorInputPostDto) // [FromBody] - Vem do corpo da requisição  
         {
+
 
             if (diretorInputPostDto.Nome == "") //TEMPORÁRIO
             {
@@ -42,6 +62,12 @@ namespace WebAPIDotNET5.Controllers
 
         }
 
+        /// <summary>
+        /// Busca todos os diretores
+        /// </summary>
+        /// <response code="200">Sucesso ao buscar todos os diretores.</response>
+        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpGet]
         public async Task<ActionResult<List<DiretorOutputGetAllDTO>>> Get() //Toda vez que for async tem que ter uma Task
         {
@@ -60,6 +86,13 @@ namespace WebAPIDotNET5.Controllers
 
         }
 
+        /// <summary>
+        /// Busca um diretor pelo Id
+        /// </summary>
+        /// <param name="id">Id do diretor</param>
+        /// <response code="200">Sucesso ao buscar um diretor.</response>
+        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpGet("{id}")]
         public async Task<ActionResult<DiretorOutputGetByIdDTO>> Get(long id)
         {
@@ -78,6 +111,25 @@ namespace WebAPIDotNET5.Controllers
             return Ok(diretorOutputGetByIdDto);
         }
 
+        /// <summary>
+        /// Atualiza um diretor
+        /// </summary>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /diretores
+        ///     {
+        ///        
+        ///        "nome": "Novo Nome", 
+        ///        "email": "NovoEmail@gmail.com"
+        ///     }
+        /// </remarks>
+        /// <param name="id">Id do diretor</param>
+        /// <param name="diretorInputPutDto">Nome e email do diretor</param> 
+        /// <response code="200">Sucesso ao atualizar um diretor.</response>
+        /// <response code="201">Retorna um diretor recém atualizado.</response>
+        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpPut("{id}")]
         public async Task<ActionResult<DiretorInputPutDTO>> Put(long id, [FromBody] DiretorInputPutDTO diretorInputPutDto)
         {
@@ -104,6 +156,14 @@ namespace WebAPIDotNET5.Controllers
             return Ok(diretorOutputDto);
         }
 
+        /// <summary>
+        /// Deleta um diretor
+        /// </summary>
+        /// <param name="id">Id do diretor</param>
+        /// <response code="200">Sucesso ao deletar um diretor.</response>
+        /// <response code="201">Retorna um diretor recém deletado.</response>
+        /// <response code="400">Se a requisição tiver valor null.</response> //Adicionar 409 futuramente 
+        /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpDelete("{id}")]
         public async Task<ActionResult<Diretor>> Delete(long id)
         {

@@ -2,7 +2,7 @@
 
 namespace WebAPIDotNET5.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InittialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
