@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
-namespace WebAPIDotNET5
+namespace WebAPIDotNet
 {
     public class Startup
     {
