@@ -13,7 +13,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
-namespace WebAPIDotNet
+namespace WebAPIDotNET5
 {
     public class Startup
     {
@@ -31,7 +31,7 @@ namespace WebAPIDotNet
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProjetoWebAPI", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIDotNet", Version = "v1" });
             });
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite("Data Source=myapi.db"));
@@ -46,7 +46,7 @@ namespace WebAPIDotNet
                 app.UseSwagger();
                 app.UseSwaggerUI(c =>
                 {
-                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProjetoWebAPI v1");
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIDotNet v1");
                     c.RoutePrefix = string.Empty;
                 });
                 // app.Run(async context => { //Abrir o swagger ao iniciar a API
