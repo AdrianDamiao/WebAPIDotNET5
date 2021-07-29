@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 
 namespace WebAPIDotNET5
@@ -30,8 +31,10 @@ namespace WebAPIDotNET5
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebAPIDotNET5", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProjetoWebAPI", Version = "v1" });
             });
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlite("Data Source=myapi.db"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,8 +44,18 @@ namespace WebAPIDotNET5
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "WebAPIDotNET5 v1"));
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProjetoWebAPI v1");
+                    c.RoutePrefix = string.Empty;
+                });
+                // app.Run(async context => { //Abrir o swagger ao iniciar a API
+                //     context.Response.Redirect("/swagger/index.html");
+                //});
+
             }
+
+
 
             app.UseHttpsRedirection();
 
