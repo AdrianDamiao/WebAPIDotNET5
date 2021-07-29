@@ -1,4 +1,5 @@
-public class Filme{
+public class Filme
+{
 
     public long Id { get; set; }
     public string Titulo { get; set; }
@@ -8,7 +9,8 @@ public class Filme{
     public long DiretorId { get; set; }
 
     public Diretor Diretor { get; set; } //Objeto para navegação, não é obrigatório. Somente por questão de facilidade    
-    public Filme(string titulo, long diretorId){
+    public Filme(string titulo, long diretorId)
+    {
         Titulo = titulo;
         DiretorId = diretorId; // Regra 1
     }

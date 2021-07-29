@@ -1,19 +1,20 @@
 using System.Collections.Generic;
 
-public class Diretor{
+public class Diretor
+{
 
     public long Id { get; set; }
-    
-    public string Email { get; set; }
-    
-    
+
     public string Nome { get; set; }
+    public string Email { get; set; }
 
     public ICollection<Filme> Filmes { get; set; }
 
-    public Diretor(string nome){ //Construido para poder inicializar uma lista de filmes
+    public Diretor(string nome, string email)
+    {
         Nome = nome;
-        Filmes = new List<Filme>();
+        Email = email;
+        Filmes = new List<Filme>(); //Construido para poder inicializar uma lista de filmes
     }
 
 }
