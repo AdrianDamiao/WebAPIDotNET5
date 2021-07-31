@@ -1,13 +1,13 @@
 
+using System;
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using System;
 using WebAPIDotNET5.DTOs;
 
 namespace WebAPIDotNET5.Services
 {
-    public class DiretorService
+    public class DiretorService : IDiretorService
     {
         private readonly ApplicationDbContext _context;
         public DiretorService(ApplicationDbContext context)

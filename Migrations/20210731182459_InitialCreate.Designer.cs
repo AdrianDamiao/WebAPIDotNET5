@@ -7,14 +7,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebAPIDotNET5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210729161247_InitialCreate")]
+    [Migration("20210731182459_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.6");
+                .HasAnnotation("ProductVersion", "5.0.8");
 
             modelBuilder.Entity("Diretor", b =>
                 {

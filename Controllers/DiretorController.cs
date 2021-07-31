@@ -13,12 +13,9 @@ namespace WebAPIDotNET5.Controllers
     [Route("[controller]")] // Rota do recurso
     public class DiretorController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
-        private readonly DiretorService _diretorService; //Contexto intermediario para comunicação com o banco
-        public DiretorController(ApplicationDbContext context,
-                                 DiretorService diretorService) // Injeção de dependência -> pra construir um controller é necessario uma classe de contexto
+        private readonly IDiretorService _diretorService; //Contexto intermediario para comunicação com o banco
+        public DiretorController(IDiretorService diretorService) // Injeção de dependência -> pra construir um controller é necessario uma classe de contexto
         {
-            _context = context;
             _diretorService = diretorService;
         }
 

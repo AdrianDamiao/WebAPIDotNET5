@@ -6,7 +6,7 @@ using WebAPIDotNET5.DTOs;
 
 namespace WebAPIDotNET5.Services
 {
-    public class FilmeService
+    public class FilmeService : IFilmeService
     {
         private readonly ApplicationDbContext _context;
 

@@ -13,9 +13,9 @@ namespace WebAPIDotNET5.Controllers
     [Route("[controller]")] // Rota do recurso
     public class FilmeController : ControllerBase
     {
-        private readonly FilmeService _filmeService;
+        private readonly IFilmeService _filmeService;
 
-        public FilmeController(FilmeService filmeService)
+        public FilmeController(IFilmeService filmeService)
         {
             _filmeService = filmeService;
         }
