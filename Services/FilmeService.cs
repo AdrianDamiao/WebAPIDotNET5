@@ -1,8 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using WebAPIDotNET5.DTOs;
+using WebAPIDotNET5.Extensions;
 
 namespace WebAPIDotNET5.Services
 {
@@ -26,20 +29,29 @@ namespace WebAPIDotNET5.Services
             return filmeOutputPostDto;
         }
 
-        public async Task<List<FilmeOutputGetAllDTO>> BuscaTodos()
+        public async Task<FilmeListOutputGetAllDTO> BuscaPorPaginaAsync(int pagina, int limite, CancellationToken cancellationToken)
         {
-            var filmes = await _context.Filmes.ToListAsync();
-            if (filmes == null)
+            var pagedModel = await _context.Filmes
+                    .AsNoTracking() //Não observa modificações na entidade, apenas retorna
+                    .OrderBy(p => p.Id)
+                    .PaginateAsync(pagina, limite, cancellationToken);
+
+            if (pagina > pagedModel.TotalPaginas) //Temporário
             {
-                throw new Exception("Filmes não encontrados!");
+                throw new Exception("Essa página não contem registros");
             }
-            var filmeOutputGetAllDto = new List<FilmeOutputGetAllDTO>();
-            foreach (Filme filme in filmes)
+            if (!pagedModel.Itens.Any())
             {
-                filmeOutputGetAllDto.Add(new FilmeOutputGetAllDTO(filme.Id, filme.Titulo));
+                throw new Exception("Não existem filmes cadastrados!");
             }
 
-            return filmeOutputGetAllDto;
+            return new FilmeListOutputGetAllDTO
+            {
+                PaginaAtual = pagedModel.PaginaAtual,
+                TotalPaginas = pagedModel.TotalPaginas,
+                TotalItens = pagedModel.TotalItens,
+                Itens = pagedModel.Itens.Select(filme => new FilmeOutputGetAllDTO(filme.Id, filme.Titulo)).ToList()
+            };
         }
 
         public async Task<FilmeOutputGetByIdDTO> BuscaPorId(long id)

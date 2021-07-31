@@ -1,10 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using WebAPIDotNET5.DTOs;
-using WebAPIDotNET5.Services;
 
 namespace WebAPIDotNET5.Controllers
 {
@@ -49,9 +48,9 @@ namespace WebAPIDotNET5.Controllers
         /// <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
         /// <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
         [HttpGet]
-        public async Task<ActionResult<List<DiretorOutputGetAllDTO>>> Get() //Toda vez que for async tem que ter uma Task
+        public async Task<ActionResult<DiretorListOutputGetAllDTO>> Get(CancellationToken cancellationToken, int pagina = 1, int limite = 10) //Toda vez que for async tem que ter uma Task
         {
-            return await _diretorService.BuscaTodos();
+            return await _diretorService.BuscaPorPaginaAsync(pagina, limite, cancellationToken);
         }
 
         /// <summary>

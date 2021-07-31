@@ -1,13 +1,15 @@
 
-using System;
 using System.Threading.Tasks;
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading;
+using System.Linq;
 using WebAPIDotNET5.DTOs;
+using WebAPIDotNET5.Extensions;
 
 namespace WebAPIDotNET5.Services
 {
-    public class DiretorService : IDiretorService
+    public class DiretorService : IDiretorService //Interface -> Boas praticas
     {
         private readonly ApplicationDbContext _context;
         public DiretorService(ApplicationDbContext context)
@@ -25,20 +27,29 @@ namespace WebAPIDotNET5.Services
             return diretorOutputPostDto;
         }
 
-        public async Task<List<DiretorOutputGetAllDTO>> BuscaTodos()
+        public async Task<DiretorListOutputGetAllDTO> BuscaPorPaginaAsync(int pagina, int limite, CancellationToken cancellationToken)
         {
-            var diretores = await _context.Diretores.ToListAsync();
-            if (diretores == null)
+            var pagedModel = await _context.Diretores
+                    .AsNoTracking() //Não observa modificações na entidade, apenas retorna
+                    .OrderBy(p => p.Id)
+                    .PaginateAsync(pagina, limite, cancellationToken);
+
+            if (pagina > pagedModel.TotalPaginas) //Temporário
             {
-                throw new Exception("Diretores não encontrados!");
+                throw new Exception("Essa página não contem registros");
             }
-            var diretorOutputGetAllDto = new List<DiretorOutputGetAllDTO>();
-            foreach (Diretor diretor in diretores)
+            if (!pagedModel.Itens.Any())
             {
-                diretorOutputGetAllDto.Add(new DiretorOutputGetAllDTO(diretor.Id, diretor.Nome, diretor.Email));
+                throw new Exception("Não existem diretores cadastrados!");
             }
 
-            return diretorOutputGetAllDto;
+            return new DiretorListOutputGetAllDTO
+            {
+                PaginaAtual = pagedModel.PaginaAtual,
+                TotalPaginas = pagedModel.TotalPaginas,
+                TotalItens = pagedModel.TotalItens,
+                Itens = pagedModel.Itens.Select(diretor => new DiretorOutputGetAllDTO(diretor.Id, diretor.Nome, diretor.Email)).ToList()
+            };
         }
 
         public async Task<DiretorOutputGetByIdDTO> BuscaPorId(long id)
