@@ -1,11 +1,14 @@
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-public class ApplicationDbContext : DbContext { // Classe padrao do .NET
+public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
+{ // Classe padrao do .NET
     public DbSet<Filme> Filmes { get; set; }
     public DbSet<Diretor> Diretores { get; set; }
 
-    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options){ 
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
+    {
 
     }
 
-} 
+}
