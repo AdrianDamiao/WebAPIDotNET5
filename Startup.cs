@@ -131,6 +131,8 @@ namespace WebAPIDotNET5
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));

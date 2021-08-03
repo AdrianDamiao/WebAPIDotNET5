@@ -2,12 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using WebAPIDotNET5.DTOs;
 
 namespace WebAPIDotNET5.Controllers
 {
-
+    [Authorize]
     [ApiController] // Diz que a classe Controller é uma API   
     [Route("[controller]")] // Rota do recurso
     public class DiretorController : ControllerBase
