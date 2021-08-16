@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WebAPIDotNET5</name>
+    </assembly>
+    <members>
+        <member name="M:WebAPIDotNET5.Controllers.DiretorController.Post(WebAPIDotNET5.DTOs.DiretorInputPostDTO)">
+             <summary>
+             Cria um diretor
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /diretor
+                 {
+                    "nome": "Steven Spielberg", 
+                    "email": "steven.spielberg@gmail.com"
+                 }
+             </remarks>
+             <param name="diretorInputPostDto">Nome e email do diretor</param>
+             <response code="200">Sucesso ao criar um diretor.</response>
+             <response code="201">Retorna um diretor recém criado.</response>
+             <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
+             <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
+        </member>
+        <member name="M:WebAPIDotNET5.Controllers.DiretorController.Get(System.Threading.CancellationToken,System.Int32,System.Int32)">
+            <summary>
+            Busca todos os diretores
+            </summary>
+            <response code="200">Sucesso ao buscar todos os diretores.</response>
+            <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
+            <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
+        </member>
+        <member name="M:WebAPIDotNET5.Controllers.DiretorController.Get(System.Int64)">
+            <summary>
+            Busca um diretor pelo Id
+            </summary>
+            <param name="id">Id do diretor</param>
+            <response code="200">Sucesso ao buscar um diretor.</response>
+            <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
+            <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
+        </member>
+        <member name="M:WebAPIDotNET5.Controllers.DiretorController.Put(System.Int64,WebAPIDotNET5.DTOs.DiretorInputPutDTO)">
+             <summary>
+             Atualiza um diretor
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /diretor
+                 {
+                    "nome": "Novo Nome", 
+                    "email": "NovoEmail@gmail.com"
+                 }
+             </remarks>
+             <param name="id">Id do diretor</param>
+             <param name="diretorInputPutDto">Nome e email do diretor</param> 
+             <response code="200">Sucesso ao atualizar um diretor.</response>
+             <response code="201">Retorna um diretor recém atualizado.</response>
+             <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
+             <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
+        </member>
+        <member name="M:WebAPIDotNET5.Controllers.DiretorController.Delete(System.Int64)">
+            <summary>
+            Deleta um diretor
+            </summary>
+            <param name="id">Id do diretor</param>
+            <response code="200">Sucesso ao deletar um diretor.</response>
+            <response code="201">Retorna um diretor recém deletado.</response>
+            <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
+            <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
+        </member>
+        <member name="M:WebAPIDotNET5.Controllers.FilmeController.Post(WebAPIDotNET5.DTOs.FilmeInputPostDTO)">
+             <summary>
+             Cria um filme
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /filme
+                 { 
+                    "titulo": "Jurassic Park", 
+                    "diretorId": 1
+                 }
+             </remarks>
+             <param name="filmeInputPostDto">Titulo do filme e Id do diretor</param>
+             <response code="200">Sucesso ao criar um filme.</response>
+             <response code="201">Retorna um filme recém criado.</response>
+             <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
+             <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
+        </member>
+        <member name="M:WebAPIDotNET5.Controllers.FilmeController.Get(System.Threading.CancellationToken,System.Int32,System.Int32)">
+            <summary>
+            Busca todos os filmes
+            </summary>
+            <response code="200">Sucesso ao buscar todos os filmes.</response>
+            <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
+            <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
+        </member>
+        <member name="M:WebAPIDotNET5.Controllers.FilmeController.Get(System.Int64)">
+            <summary>
+            Busca um filme por Id
+            </summary>
+            <param name="id">Id do filme</param>
+            <response code="200">Sucesso ao buscar um filme.</response>
+            <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
+            <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
+        </member>
+        <member name="M:WebAPIDotNET5.Controllers.FilmeController.Put(System.Int64,WebAPIDotNET5.DTOs.FilmeInputPutDTO)">
+             <summary>
+             Atualiza um filme
+             </summary>
+             <remarks>
+             Sample request:
+            
+                 POST /filme
+                 {
+                    "titulo": "Novo Nome", 
+                    "diretorId": 1
+                 }
+             </remarks>
+             <param name="id">Id do Filme</param>
+             <param name="filmeInputPutDto">Titulo do filme e Id do diretor</param>
+             <response code="200">Sucesso ao atualizar um filme.</response>
+             <response code="201">Retorna um filme recém atualizado.</response>
+             <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
+             <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
+        </member>
+        <member name="M:WebAPIDotNET5.Controllers.FilmeController.Delete(System.Int64)">
+            <summary>
+            Deleta um filme
+            </summary>
+            <param name="id">Id do diretor</param>
+            <response code="200">Sucesso ao deletar um filme.</response>
+            <response code="201">Retorna um filme recém deletado.</response>
+            <response code="400">Erro de validação.</response> //Adicionar 409 futuramente 
+            <response code="500">A solicitação não foi concluída devido a um erro interno no lado do servidor.</response>
+        </member>
+    </members>
+</doc>
