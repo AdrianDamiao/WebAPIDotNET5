@@ -1,5 +1,7 @@
 using System;
 using Xunit;
+using FluentValidation.TestHelper;
+using WebAPIDotNET5.DTOs;
 
 namespace MeuAppTestes
 {
@@ -15,10 +17,19 @@ namespace MeuAppTestes
         }
 
         [Fact]
-        public void OResultadoDaSomaDeveSerSeis()
+        public void NomeDoDiretorDeveApresentarErroSeForVazio()
         {
-            Assert.Equal(4, Add(3, 3)); //Primeiro parâmetro -> Esperado, Segundo parâmetro -> valor atual
+            var validator = new DiretorInputPostDTOValidador();
+            var dto = new DiretorInputPostDTO { Nome = null };
+            var result = validator.TestValidate(dto);
+            result.ShouldHaveValidationErrorFor(diretor => diretor.Nome);
         }
+
+        // [Fact]
+        // public void OResultadoDaSomaDeveSerSeis()
+        // {
+        //     Assert.Equal(4, Add(3, 3)); //Primeiro parâmetro -> Esperado, Segundo parâmetro -> valor atual
+        // }
 
         [Fact]
         public void CriaUmDiretor()

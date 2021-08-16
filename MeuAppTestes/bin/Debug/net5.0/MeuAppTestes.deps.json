@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v5.0": {
       "MeuAppTestes/1.0.0": {
         "dependencies": {
+          "FluentValidation": "10.3.0",
           "Microsoft.NET.Test.Sdk": "16.9.4",
           "WebAPIDotNET5": "1.0.0",
           "coverlet.collector": "3.0.2",

@@ -1,36 +1,39 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\User\\Documents\\csharp\\WebAPIAndre\\Pessoal\\WebAPIDotNET5\\MeuAppTestes\\MeuAppTestes.csproj": {}
+    "C:\\Users\\adria\\Documents\\nlw04\\CursoC#Andre\\ultimo\\MeuAppTestes\\MeuAppTestes.csproj": {}
   },
   "projects": {
-    "C:\\Users\\User\\Documents\\csharp\\WebAPIAndre\\Pessoal\\WebAPIDotNET5\\MeuAppTestes\\MeuAppTestes.csproj": {
+    "C:\\Users\\adria\\Documents\\nlw04\\CursoC#Andre\\ultimo\\MeuAppTestes\\MeuAppTestes.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\csharp\\WebAPIAndre\\Pessoal\\WebAPIDotNET5\\MeuAppTestes\\MeuAppTestes.csproj",
+        "projectUniqueName": "C:\\Users\\adria\\Documents\\nlw04\\CursoC#Andre\\ultimo\\MeuAppTestes\\MeuAppTestes.csproj",
         "projectName": "MeuAppTestes",
-        "projectPath": "C:\\Users\\User\\Documents\\csharp\\WebAPIAndre\\Pessoal\\WebAPIDotNET5\\MeuAppTestes\\MeuAppTestes.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\csharp\\WebAPIAndre\\Pessoal\\WebAPIDotNET5\\MeuAppTestes\\obj\\",
+        "projectPath": "C:\\Users\\adria\\Documents\\nlw04\\CursoC#Andre\\ultimo\\MeuAppTestes\\MeuAppTestes.csproj",
+        "packagesPath": "C:\\Users\\adria\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\adria\\Documents\\nlw04\\CursoC#Andre\\ultimo\\MeuAppTestes\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\adria\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\User\\Documents\\csharp\\WebAPIAndre\\Pessoal\\WebAPIDotNET5\\MeuApp\\WebAPIDotNET5.csproj": {
-                "projectPath": "C:\\Users\\User\\Documents\\csharp\\WebAPIAndre\\Pessoal\\WebAPIDotNET5\\MeuApp\\WebAPIDotNET5.csproj"
+              "C:\\Users\\adria\\Documents\\nlw04\\CursoC#Andre\\ultimo\\MeuApp\\WebAPIDotNET5.csproj": {
+                "projectPath": "C:\\Users\\adria\\Documents\\nlw04\\CursoC#Andre\\ultimo\\MeuApp\\WebAPIDotNET5.csproj"
               }
             }
           }
@@ -45,6 +48,10 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[10.3.0, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[16.9.4, )"
@@ -81,29 +88,32 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\User\\Documents\\csharp\\WebAPIAndre\\Pessoal\\WebAPIDotNET5\\MeuApp\\WebAPIDotNET5.csproj": {
+    "C:\\Users\\adria\\Documents\\nlw04\\CursoC#Andre\\ultimo\\MeuApp\\WebAPIDotNET5.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\User\\Documents\\csharp\\WebAPIAndre\\Pessoal\\WebAPIDotNET5\\MeuApp\\WebAPIDotNET5.csproj",
+        "projectUniqueName": "C:\\Users\\adria\\Documents\\nlw04\\CursoC#Andre\\ultimo\\MeuApp\\WebAPIDotNET5.csproj",
         "projectName": "WebAPIDotNET5",
-        "projectPath": "C:\\Users\\User\\Documents\\csharp\\WebAPIAndre\\Pessoal\\WebAPIDotNET5\\MeuApp\\WebAPIDotNET5.csproj",
-        "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\User\\Documents\\csharp\\WebAPIAndre\\Pessoal\\WebAPIDotNET5\\MeuApp\\obj\\",
+        "projectPath": "C:\\Users\\adria\\Documents\\nlw04\\CursoC#Andre\\ultimo\\MeuApp\\WebAPIDotNET5.csproj",
+        "packagesPath": "C:\\Users\\adria\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\adria\\Documents\\nlw04\\CursoC#Andre\\ultimo\\MeuApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\User\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\adria\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -175,7 +185,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.303\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
         }
       }
     }
