@@ -101,9 +101,7 @@ namespace WebAPIDotNET5
                 };
             });
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlite("Data Source=myapi.db"));
-
+            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite("Data Source=myapi.db"));
             services.AddScoped<IDiretorService, DiretorService>();
             services.AddScoped<IFilmeService, FilmeService>();
 

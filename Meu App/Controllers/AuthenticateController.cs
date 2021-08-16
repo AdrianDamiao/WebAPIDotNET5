@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
-[Authorize]
 [ApiController]
 [Route("[controller]")]
 public class AuthenticateController : ControllerBase

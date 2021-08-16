@@ -8,14 +8,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace WebAPIDotNET5.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210802234852_AddAuth")]
+    [Migration("20210816133314_AddAuth")]
     partial class AddAuth
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "5.0.8");
+                .HasAnnotation("ProductVersion", "5.0.9");
 
             modelBuilder.Entity("ApplicationUser", b =>
                 {
