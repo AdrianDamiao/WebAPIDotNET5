@@ -23,15 +23,13 @@ namespace WebAPIDotNET5.Extensions
             paged.PaginaAtual = pagina;
             paged.TamanhoPagina = limite;
 
-            var totalItensCountTask = query.CountAsync(cancellationToken); //Inicia uma query
-
             var linhaInicial = (pagina - 1) * limite; //Qual registro marca o inicio da página
             paged.Itens = await query //Execução da query
                  .Skip(linhaInicial) //Ignora tudo que vem antes de startRow, ou seja, ignora as paginas anteriores
                  .Take(limite) //Pega o limite, os proximos itens 
                  .ToListAsync(cancellationToken);
 
-            paged.TotalItens = await totalItensCountTask; //Total de registros do banco
+            paged.TotalItens = query.Count(); //Total de registros do banco
             paged.TotalPaginas = (int)Math.Ceiling(paged.TotalItens / (double)limite); //Total de paginas -> Qtd itens / numero de paginas
 
             return paged;
