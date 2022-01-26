@@ -1,7 +1,8 @@
 <template>
   <div>
   <div class="home">
-    <h1>{{ msg }}</h1>
+    <img alt="Library logo" src="../public/logo.png">
+    <h1>{{ 'Work in Progress' }}</h1>
     <p>
     Projeto front-end da API desenvolvida em .NET5.0 no
     curso de C# do <a :href="githubAndre">André Darcie</a><br>
