@@ -1,7 +1,7 @@
 <template>
   <div>
   <div class="home">
-    <img alt="Library logo" src="../public/logo.png">
+    <img alt="Library logo" src="../../public/logo.png">
     <h1>{{ 'Work in Progress' }}</h1>
     <p>
     Projeto front-end da API desenvolvida em .NET5.0 no
@@ -18,9 +18,6 @@
 <script>
 export default {
   name: 'Home',
-  props: {
-    msg: String,
-  },
 
   data() {
     return {
